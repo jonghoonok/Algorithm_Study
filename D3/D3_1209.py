@@ -7,17 +7,19 @@ for test_case in range(1, 11):
     matrix = [list(map(int, input().split())) for _ in range(100)]
     result = 0
     
+    # 각 행의 합
     for i in range(100):
         temp = 0
         for j in range(100):
             temp += matrix[i][j]
         if temp > result: result = temp
+    # 각 열의 합
     for i in range(100):
         temp = 0
         for j in range(100):
             temp += matrix[j][i]
         if temp > result: result = temp
-    
+    # 각 대각선의 합
     temp = 0
     for i in range(100):
         temp += matrix[i][i]
