@@ -2,6 +2,7 @@ import sys
 
 sys.stdin = open("D3_4831_input.txt", "r")
 
+
 def charge(num, busEnd, busStopList):
     energy = num
     num_of_charge = 0
@@ -12,13 +13,14 @@ def charge(num, busEnd, busStopList):
         energy -= busStopList[i] - busStopList[i-1]
         
         # 에너지가 부족하면 0을 리턴
-        if energy < 0 : return 0
+        if energy < 0: return 0
         
         # 다음 정류장까지의 거리를 보고 에너지가 부족하면 충전
         if energy < busStopList[i+1] - busStopList[i]:
             num_of_charge += 1
             energy = num
     return num_of_charge
+
 
 t = int(input())
 
