@@ -27,9 +27,9 @@ def space_sort2(numbers):
     for i in range(n-1):
         least = i        
         for j in range(i+1, n):
-            if result[j] > result[least]:
+            if result[j] < result[least]:
                 least = j                
-        numbers[i], numbers[least] = numbers[least], numbers[i]     
+        result[i], result[least] = result[least], result[i]     
     
     new_result=[]
     for i in range(n):
