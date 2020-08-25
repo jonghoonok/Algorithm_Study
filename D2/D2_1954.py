@@ -18,7 +18,7 @@ def snare(num):
         next_x = x + dx[case%4]
         next_y = y + dy[case%4]
         
-        
+        # not in 과 
         # if next_x not in (0, num) or next_y not in (0, num) or matrix[next_x][next_y] != 0 :
         #     case += 1        
 

@@ -17,24 +17,35 @@ sys.stdin = open("D3_1221_input.txt", "r")
 #     print(*numbers)
 
 # 풀이2: 숫자로 변환하고 정렬한 뒤 다시 문자로 변환
-def space_sort2(numbers):
-    result = []
-    num_list = ['ZRO', 'ONE', 'TWO', 'THR', 'FOR', 'FIV', 'SIX', 'SVN', 'EGT', 'NIN']
-    for i in range(n):        
-        result.append(num_list.index(numbers[i]))
+# def space_sort2(numbers):
+#     result = []
+#     num_list = ['ZRO', 'ONE', 'TWO', 'THR', 'FOR', 'FIV', 'SIX', 'SVN', 'EGT', 'NIN']
+#     for i in range(n):        
+#         result.append(num_list.index(numbers[i]))
 
-    # 마찬가지로 선택정렬을 쓰지만 풀이1보다는 훨씬 빠름
-    for i in range(n-1):
-        least = i        
-        for j in range(i+1, n):
-            if result[j] < result[least]:
-                least = j                
-        result[i], result[least] = result[least], result[i]     
+#     # 마찬가지로 선택정렬을 쓰지만 풀이1보다는 훨씬 빠름
+#     for i in range(n-1):
+#         least = i        
+#         for j in range(i+1, n):
+#             if result[j] < result[least]:
+#                 least = j                
+#         result[i], result[least] = result[least], result[i]     
     
-    new_result=[]
+#     new_result=[]
+#     for i in range(n):
+#         new_result.append(num_list[result[i]])
+#     print(*new_result)
+
+# 풀이3: count하여 해결
+def space_sort3(numbers):
+    check = [0]*10
+    num_list = ['ZRO', 'ONE', 'TWO', 'THR', 'FOR', 'FIV', 'SIX', 'SVN', 'EGT', 'NIN']
     for i in range(n):
-        new_result.append(num_list[result[i]])
-    print(*new_result)
+        check[num_list.index(numbers[i])] += 1
+    result = []
+    for j in range(10):
+        result.extend([num_list[j]]*check[j])
+    print(*result)
 
 t = int(input())
 for test_case in range(t):
@@ -42,4 +53,5 @@ for test_case in range(t):
     n = int(n)
     space_number = list(input().split())
     print('#' + str(test_case + 1))
-    space_sort2(space_number)
+    space_sort3(space_number)
+

@@ -3,31 +3,35 @@ import sys
 sys.stdin = open("D3_1216_input.txt", "r")
 
 
-def palindrome(words):
+# 하나의 문자열을 받아 그 안에 있는 회문의 최대 길이를 리턴
+def find_palindrome(words):
     result = 0
-    for i in range(1, 101):
+    # 최대 길이에서부터 하나씩 줄이는 것이 더 빠름
+    for i in range(100, 0, -1):
         for j in range(101 - i):
-            if list(words[j:i+j]) == list(reversed(words[j:i+j])):
-                if result < i:
-                    result = i
-    return result
+            if list(words[j:i+j]) == list(reversed(words[j:i+j])):    
+                result = i
+                return result
 
 
-def palindrome2(matrix):
+# 행렬을 받아 행과 열에 대해 각각 palindrome() 실시
+def palindrome(matrix):
     result = 0
 
     # 행 검색
     for i in range(100):
-        if palindrome(matrix[i]) > result:
-            result = palindrome(matrix[i])
+        row = find_palindrome(matrix[i])
+        if row > result:
+            result = row
 
     # 열 검색
     for i in range(100):
         column = ''
         for j in range(100):
             column += matrix[j][i]
-        if palindrome(column) > result:
-            result = palindrome(column)
+        col = find_palindrome(column)
+        if col > result:
+            result = col
 
     return result
 
@@ -35,4 +39,4 @@ def palindrome2(matrix):
 for test_case in range(1, 11):
     n = int(input())
     char_list = [input() for _ in range(100)]
-    print('#' + str(test_case), palindrome2(char_list))
+    print('#' + str(test_case), palindrome(char_list))
