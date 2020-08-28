@@ -14,13 +14,19 @@ def paper(width):
 
 
 # memoization을 활용한 재귀
-def paper2(width):   
-    result = 0
+def paper2(width):       
     if memoization[width] != 0:
-        result =  memoization[width]
+        return  memoization[width]
     else:
-        result = memoization[width] = paper2(width-10) + paper2(width-20)*2
-    return result
+        memoization[width] = paper2(width-10) + paper2(width-20)*2
+    return memoization[width]
+
+
+# 반복문
+def paper3(width):
+    for i in range(30, n+10, 10):
+        memoization[i] = memoization[i-10] + memoization[i-20]*2
+    return memoization[width]
 
 
 t = int(input())
@@ -29,4 +35,4 @@ for test in range(t):
     memoization = [0]*(n+1)
     memoization[10] = 1
     memoization[20] = 3
-    print('#'+str(test+1), paper2(n))
+    print('#'+str(test+1), paper3(n))

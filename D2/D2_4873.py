@@ -34,7 +34,6 @@ def erase2(letters):
         stack.append(letter)
     
     # 문제에선 앞에서부터 중복을 체크하니 제일 앞의 원소를 pop
-    
     while stack:
         if not stack_result:
             stack_result.append(stack.pop(0))
@@ -50,7 +49,21 @@ def erase2(letters):
     
     return len(stack_result)
 
+
+# 더 간단한 stack 이용
+def erase3(letters):
+    stack = []
+    
+    for letter in letters:        
+        if not stack or letter != stack[-1]:
+            stack.append(letter)
+        else:
+            stack.pop()
+    
+    return len(stack)
+
+
 t = int(input())
 for test in range(t):
     chars = input()
-    print('#'+str(test+1), erase2(chars))
+    print('#'+str(test+1), erase3(chars))
