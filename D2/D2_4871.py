@@ -16,8 +16,8 @@ def path(G, Start, Goal):
             stack.extend(G[w])
     return 0
 
+visit = []
 def path_recursive(G, Start, Goal):
-    visit = []
     visit.append(Start)
     if Start == Goal:
         return 1

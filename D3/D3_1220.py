@@ -5,6 +5,7 @@ sys.stdin = open("D3_1220_input.txt", "r")
 # 1: N, 2: S
 def magnet():
     cnt = 0
+    # 위에 N극 아래에 S극이므로 행을 먼저 scan
     for j in range(100):        
         temp = 0
         for i in range(100):
@@ -18,7 +19,6 @@ def magnet():
                 if temp == 1:
                     temp = 0
                     cnt += 1
-
     return cnt
 
 
