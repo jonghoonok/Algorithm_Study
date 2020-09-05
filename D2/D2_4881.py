@@ -15,6 +15,7 @@ def listsum(n):
             result = temp
     return result
 
+# 가지치기를 도입하지 않았을 때: 시간초과 발생
 def perm(n, k):    
     if k == n:
         # 단순히 arr를 더해주면 shallow copy이므로 perm_list의 모든 원소가 같아짐
@@ -49,13 +50,30 @@ def perm2(n, k, curmin):
     return curmin
 
 
+# 더 효율적인 가지치기
+def perm3(n, k, cursum):
+    global ans
+    if ans < cursum:
+        return
+    if k == n:
+        if ans > cursum:
+            ans = cursum
+    else:
+        for i in range(k, n):
+            arr[k], arr[i] = arr[i], arr[k]
+            perm3(n, k+1, cursum + numbers[k][arr[k]])
+            arr[k], arr[i] = arr[i], arr[k]
+
+
 t = int(input())
 for test_case in range(t):
     total = 0
     n = int(input())
+    ans = 100000000
     numbers = [list(map(int, input().split())) for _ in range(n)]
     arr = [i for i in range(n)]
     perm_list =[]
-    # print('#' + str(test_case + 1), listsum(n))   
-    
-    print('#' + str(test_case + 1), perm2(n, 0, 10000000))
+    # print('#' + str(test_case + 1), listsum(n))       
+    # print('#' + str(test_case + 1), perm2(n, 0, 10000000))
+    perm3(n, 0, 0)
+    print('#' + str(test_case + 1), ans)

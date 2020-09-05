@@ -1,8 +1,9 @@
 # import sys
-
+import time
+from itertools import permutations
 # sys.stdin = open("D3_2806_input.txt", "r")
 
-import copy
+# import copy
 
 def clear(x, y, plate):
     dx = [0, 1, 1, 1, 0, -1, -1, -1]
@@ -82,6 +83,8 @@ def promissing(i, col):
     k = 1
     flag = True 
     # 첫째행에서부터 내려오며 i행에 퀸을 놓은 것이 타당한지 체크
+    if col[i] in col[:i]:
+        return False
     while k < i and flag:
         if col[k] == col[i] or abs(col[k] - col[i]) == (i - k):
             flag = False
@@ -90,11 +93,23 @@ def promissing(i, col):
     return flag
     
 
-t = int(input())
-for test_case in range(t):
+def chess4(n):
+    ans = 0
+    cols = range(n)
+    for combo in permutations(cols):
+        if n == len(set(combo[i]+i for i in cols)) == len(set(combo[i]-i for i in cols)):
+            ans += 1
+    return ans
+
+
+# t = int(input())
+for test_case in range(1):
+    start = time.time()
     n = int(input())
     chess_plate = [[1]*n for _ in range(n)]
     # col을 0으로 초기화하면 제일 왼쪽에 퀸을 놓을 수 없음(대각선)
     col = [-1]*(n+1)
     # print('#' + str(test_case + 1), chess(0, chess_plate))
-    print('#' + str(test_case + 1), chess3(0, col))
+    # print('#' + str(test_case + 1), chess3(0, col))
+    print('#' + str(test_case + 1), chess4(n))
+    print(f'{(time.time()-start)*1000} ms')
