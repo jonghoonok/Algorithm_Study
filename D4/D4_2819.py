@@ -16,6 +16,10 @@ def move(x, y, temp):
     if len(temp) == 7:
         result.add(temp)
         return
+    # 위처럼 set을 쓰는 방법 말고 visit=[0]*10000000 만들어서
+    # visit[temp]에 하나씩 기록해주는 방법도 존재
+    # 단 리스트가 너무 길어 매 testcase마다 생성하면 overflow
+    # 한번만 만들고 visit[temp] = tc식으로 해줘야 함
     
     dx = [-1, 0, 1, 0]
     dy = [0, 1, 0, -1]        
@@ -25,6 +29,8 @@ def move(x, y, temp):
         if 0 <= nx < 4 and 0 <= ny < 4:
             # str concatenation을 이용하여 문자열에 숫자를 추가
             move(nx, ny, temp+str(grid[nx][ny]))
+            # # 아래와 같이 자릿수를 하나씩 밀어주는 게 더 빠르다
+            # move(nx, ny, temp*10+(grid[nx][ny]))
 
 
 t = int(input())

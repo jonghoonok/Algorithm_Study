@@ -16,6 +16,11 @@ def flag_change():
             w, b, r = com[0], com[1], com[2]
         else:
             continue
+    
+    # # N개를 3개로 구분: n-1C2라고 생각하면 다음과 같이 계산 가능
+    # for i in range(1, n-1):
+    #     for j in range(i+1, n):
+    #         w, b, r = i, j-i, n-j
         
         # 각 조합에 대해서 새로 색칠을 해야하는 횟수 temp
         temp = 0
