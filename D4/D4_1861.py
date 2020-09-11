@@ -13,7 +13,8 @@ def square_room():
     # 이미 방문한 숫자는 bfs를 시작하지 않아도 됨
     # 왜냐면 정확히 1만큼 큰 수 외에 방문할 수 없기 때문에, 조합이 유일하기 때문
     check = [1]*(n**2+1)
-    
+    # 사실 그냥 bfs 내에서 visit을 이용하면 되는 문제임....
+
     temp = 0
     for i in range(n):
         for j in range(n):
