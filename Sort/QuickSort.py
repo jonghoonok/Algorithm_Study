@@ -8,12 +8,16 @@ def quick_sort(arr, start, end):
     right = end
 
     while left <= right:
-        if arr[left] <= arr[pivot]:
+        # 피벗보다 큰 데이터를 찾을때까지
+        while left <= end and arr[left] <= arr[pivot]:
             left += 1
-        if arr[right] > arr[pivot]:
+        # 피벗보다 작은 데이터를 찾을때까지
+        while right > start and arr[right] > arr[pivot]:
             right -= 1
+        # 엇갈렸다면 작은 데이터와 피벗을 교체
         if left > right:
             arr[pivot], arr[right] = arr[right], arr[pivot]
+        # 엇갈리지 않았다면 작은 데이터와 큰 데이터를 교체
         else:
             arr[left], arr[right] = arr[right], arr[left]
     
