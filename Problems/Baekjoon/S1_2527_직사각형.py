@@ -8,11 +8,11 @@ def common_square(square1, square2):
         return 'd'
     # 선분으로 겹치는 경우
     # 1번 사각형의 왼쪽, 위, 오른쪽, 아래
-    elif (x1 == p2 and y1 < q2 and y2 < q1) or (q1 == y2 and x1 < p2 and x2 < p1) or (p1 == x2 and y1 < q2 and y2 < q1) or (q1 == y2 and x1 < p2 and x2 < p1):
+    elif (x1 == p2 and y1 < q2 and y2 < q1) or (q1 == y2 and x1 < p2 and x2 < p1) or (p1 == x2 and y1 < q2 and y2 < q1) or (y1 == q2 and x1 < p2 and x2 < p1):
         return 'b'  
     # 점으로 겹치는 경우
     # 1번 사각형의 왼쪽 위, 오른쪽 위, 오른쪽 아래, 왼쪽 아래
-    elif (x1 == p1 and q1 == y2) or (p1 == x2 and q1 == y2) or (p1 == x2 and y1 == q2) or (x1 == p2 and y1 == q2):
+    elif (x1 == p2 and q1 == y2) or (p1 == x2 and q1 == y2) or (p1 == x2 and y1 == q2) or (x1 == p2 and y1 == q2):
         return 'c'
     # 직사각형으로 겹치는 경우
     else:
