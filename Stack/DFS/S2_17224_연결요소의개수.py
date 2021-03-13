@@ -7,6 +7,7 @@ def dfs(i):
         if j not in visit:
             dfs(j)
 
+
 n, m = map(int, input().split())
 arr = [[] for _ in range(n+1)]
 # 인접 행렬과 인접 리스트를 비교했을 때 시간 상 차이는 크지 않음
