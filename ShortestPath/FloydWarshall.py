@@ -7,9 +7,7 @@ graph = [[INF]*(V+1) for _ in range(V+1)]
 
 # 자기 자신으로 가는 거리는 0으로 초기화
 for a in range(1, V+1):
-    for b in range(1, V+1):
-        if a == b:
-            graph[a][b] = 0
+    graph[a][a] = 0
 
 # 노드 a에서 b로 가는 거리 c를 입력받아 그래프 작성
 for _ in range(E):

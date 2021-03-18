@@ -6,9 +6,10 @@ input = sys.stdin.readline
 
 
 def dijkstra(start):
+    # 각 노드의 최단거리를 "업데이트"하는 데 사용하는 우선순위큐
     q = []
     heapq.heappush(q, (0, start))
-    distance    
+    # 출발점으로부터의 각 노드의 최단거리를 저장하는 배열: 최종 결과
     distance[start] = 0
     while q:
         dist, now = heapq.heappop(q)
@@ -17,10 +18,11 @@ def dijkstra(start):
         # dist가 갖고 있는 정보(큐에 저장된 거리)와 distance(처리된 거리)를 비교
         if distance[now] < dist:
             continue
-        for i in graph[now]:
-            cost = dist + i[1]
-            if cost < distance[i[0]]:
-                distance[i[0]] = cost
+        # now의 주변 노드들을 탐색
+        for edge in graph[now]:
+            cost = dist + edge[1]
+            if cost < distance[edge[0]]:
+                distance[edge[0]] = cost
                 heapq.heappush(q, (cost, i[0]))
 
 

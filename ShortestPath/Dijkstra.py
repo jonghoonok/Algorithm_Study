@@ -15,13 +15,16 @@ def dijkstra(start):
     for i in graph[start]:
         distance[i[0]] = i[1]
     
+    # 모든 노드를 방문하며 거리를 업데이트
     for i in range(v-1):
+        # 미방문 노드 중 출발점과의 거리가 최단인 곳을 탐색: O(V^2)
         now = get_smallest_node()
         visit[now] = 1
-        for j in graph[now]:
-            cost = distance[now] + j[1]
-            if cost < distance[j[0]]:
-                distance[j[0]] = cost
+        for edge in graph[now]:
+            cost = distance[now] + edge[1]
+            # 다익스트라의 핵심: 출발점-now + now-주변노드 vs 출발점-주변노드 거리 비교
+            if cost < distance[edge[0]]:
+                distance[edge[0]] = cost
 
 
 INF = int(1e9)
