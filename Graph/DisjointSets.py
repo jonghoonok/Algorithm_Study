@@ -1,21 +1,25 @@
 # 공통 원소가 없는 두 집합
 # 각 집합은 root node로 구분됨
-def find_parents(parent, x):
+def find_parents(x):
     if parent[x] != x:
-        return find_parents(parent, parent[x])
+        return find_parents(parent[x])
     return x
-    # # path compression
-    # if parent[x] != x:
-    #     parent[x] = find_parents(parent, parent[x])
-    # return parent[x]
 
-def union_parent(parent, a, b):
-    a = find_parents(parent, a)
-    b = find_parents(parent, b)
+# 아래와 같이 path compression을 통해 시간을 더 단축시킬 수 있음
+# find_parents와는 달리 parent배열에 자신의 root를 입력함
+def find_root(x):    
+    if parent[x] != x:
+        parent[x] = find_parents(parent, parent[x])
+    return parent[x]
+
+def union_parent(a, b):
+    a = find_parents(a)
+    b = find_parents(b)
     if a < b:
         parent[b] = a
     else:
         parent[a] = b
+
 
 v, e = map(int, input().split())
 parent = [0]*(v+1)

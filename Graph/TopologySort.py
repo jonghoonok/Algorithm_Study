@@ -1,26 +1,4 @@
-# 방향 그래프의 모든 노드를 방향성에 어긋나지 않게 나열
-# 예) 선수과목을 고려한 학습 설정
-# O(V+E)
 from collections import deque
-
-
-def topology_sort():
-    result = []
-    q = deque()
-
-    for i in range(1, v+1):
-        if indegree[i] == 0:
-            q.append(i)
-
-    while q:
-        now = q.popleft()
-        result.append(now)
-        for node in graph[now]:
-            indegree[node] -= 1
-            if indegree[node] == 0:
-                q.append(now)
-
-    print(' '.join(result))
 
 
 v, e = map(int, input().split())
@@ -33,4 +11,22 @@ for _ in range(e):
     graph[a].append(b)
     indegree[b] += 1
 
-topology_sort()
+result = []
+q = deque()
+
+for i in range(1, v+1):
+    # 진입차수가 0인 노드를 큐에 넣는다
+    if indegree[i] == 0:
+        q.append(i)
+
+while q:
+    now = q.popleft()
+    result.append(now)
+    for node in graph[now]:
+        # 현재 방문중인 노드에서 출발하는 간선을 제거: 도착 노드들의 진입차수 -=1
+        indegree[node] -= 1
+        if indegree[node] == 0:
+            q.append(now)
+
+# 방문한 노드를 순서대로 출력
+print(' '.join(result))
