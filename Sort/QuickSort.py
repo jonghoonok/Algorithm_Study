@@ -15,6 +15,7 @@ def quick_sort(arr, start, end):
         while right > start and arr[right] > arr[pivot]:
             right -= 1
         # 엇갈렸다면 작은 데이터와 피벗을 교체
+        # 최소한 left 왼쪽으로는 전부 피벗보다 작음이 보장되기 때문
         if left > right:
             arr[pivot], arr[right] = arr[right], arr[pivot]
         # 엇갈리지 않았다면 작은 데이터와 큰 데이터를 교체
@@ -36,4 +37,4 @@ def quick_sort_py(arr):
     left = [x for x in tail if x <= pivot]
     right = [x for x in tail if x > pivot]
 
-    quick_sort_py(left) + [pivot] + quick_sort_py(right)
+    return quick_sort_py(left) + [pivot] + quick_sort_py(right)

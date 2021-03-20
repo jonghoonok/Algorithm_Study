@@ -45,15 +45,31 @@
 
  
 
-### 2.1. DFS
+### 2.1. 순차 탐색
 
 
 
-### 2.2. BFS
+보초법
 
 
 
-### 2.3. 이진 탐색
+### 2.2. DFS
+
+
+
+### 2.3. BFS
+
+
+
+### 2.4. 이진 탐색
+
+> 정렬된 데이터에서 탐색 범위를 절반씩 좁혀가며 탐색
+>
+> O(logN)
+
+
+
+
 
 
 
@@ -62,6 +78,172 @@
 ## **3. 정렬**
 
 
+
+### 3.1. O(N^2)
+
+> 실무에서 쓸 일은 없지만...
+
+
+
+#### 3.1.1. Selection Sort
+
+
+
+문제 해결 기본 아이디어
+
+1. 배열 내 **가장 작은 원소를 찾고** 
+2. 해당 원소를 **제일 앞에 있는 원소와 swap**한 후 다시 반복
+
+
+
+해결 방법
+
+```python
+for i in range(len(arr)-1):
+    # 배열 내에서 가장 작은 원소를 찾아서 인덱스 i에 저장
+    minId = i
+    for j in range(i+1, len(arr)):
+        if arr[j] < arr[minId]:
+            minId = j
+    # 찾았으면 (for문이 끝났으면) 정렬되지 않은 수 중에 제일 앞의 수와 swap
+    arr[minId], arr[i] = arr[i], arr[minId]
+```
+
+
+
+#### 3.1.2. Insertion Sort
+
+> 이미 정렬된 배열에 대해서는 O(N)에 끝나는 정렬
+
+
+
+문제 해결 기본 아이디어
+
+1. 배열의 두 번째 원소부터 다음을 반복
+2. 자신의 **앞에 있는 원소들과 하나씩 비교하여, 자신이 작으면 앞으로 이동**하고 그렇지 않으면 멈춤
+   - 제일 작은 수는 맨 앞으로 이동하는 식으로 오름차순 정렬됨
+
+
+
+해결 방법
+
+```python
+# 첫 번째 원소는 놔두고 두 번째 원소부터 시작
+for i in range(1, len(arr)):
+    # 현재 보고 있는 원소 arr[i]를 앞에 있는 수들과 비교
+    for j in range(i, 0, -1):
+        # 앞의 수가 더 작다면 swap하여 앞으로 이동, 아니면 stop
+        if arr[j] < arr[j-1]:
+            arr[j], arr[j-1] = arr[j-1], arr[j]
+        else:
+            break
+```
+
+
+
+### 3.2. O(NlogN)
+
+
+
+#### 3.2.1. Quick Sort
+
+> 가장 많이 사용되는 정렬 알고리즘
+>
+> 평균적으로 O(NlogN)이지만 최악의 경우 O(N^2)
+
+
+
+문제 해결 기본 아이디어
+
+- 기준 데이터를 설정하고 **기준보다 큰 데이터와 작은 데이터의 위치를 바꿈**
+  - 기준을 정하는 방식에 따라 Hoare Partition, Lumoto Partition이 존재
+  - Hoare는 맨 앞을, Lumoto는 맨 뒤를 pivot으로 설정
+- Hoare는 다음과 같이 정렬함
+
+1. `i=1, j=len(n)-1`로 설정하여 각각 오른쪽과 왼쪽으로 이동시키면서 pivot과 비교
+   - pivot보다 작은 데이터를 왼쪽에, 큰 데이터를 오른쪽에 위치시킴
+2. i와 j가 교차되면 pivot과 j를 swap
+3. 다음 pivot에 대해서도 반복
+
+
+
+해결 방법
+
+```python
+def quick_sort(arr, start, end):
+    if start >= end:
+        return
+    
+    pivot = start
+    left = start + 1
+    right = end
+
+    while left <= right:
+        # 피벗보다 큰 데이터를 찾을때까지
+        while left <= end and arr[left] <= arr[pivot]: left += 1
+        # 피벗보다 작은 데이터를 찾을때까지
+        while right > start and arr[right] > arr[pivot]: right -= 1
+        # 엇갈렸다면 작은 데이터와 피벗을 교체
+        # 최소한 left 왼쪽으로는 전부 피벗보다 작음이 보장되기 때문
+        if left > right:
+            arr[pivot], arr[right] = arr[right], arr[pivot]
+        # 엇갈리지 않았다면 작은 데이터와 큰 데이터를 교체
+        else:
+            arr[left], arr[right] = arr[right], arr[left]
+    
+    quick_sort(arr, start, right-1)
+    quick_sort(arr, right+1, end)
+```
+
+
+
+
+
+#### 3.2.2. Merge Sort
+
+> 
+
+
+
+### 3.3. 기타 정렬
+
+> 상황에 따라 O(NlogN)보다 빨라질 수 있으므로 그 상황을 기억해뒀다 활용하자
+
+
+
+#### 3.3.1. Count Sort
+
+> O(N+K)이므로 데이터 중 최대값이 너무 크지만 않으면 대개의 경우 아주 빠름
+
+
+
+문제 해결 기본 아이디어
+
+- 데이터의 **모든 범위를 담을 수 있는 배열**을 만들고 거기에 데이터를 **한 번 씩만 채움**
+
+1. 배열을 선언
+2. 데이터를 순회하면서 해당 숫자와 같은 인덱스의 배열의 값을 1씩 추가한다
+3. 끝
+
+
+
+해결 방법
+
+```python
+# 데이터의 최대 범위만큼의 길이를 갖는 배열 선언
+count = [0]*n
+
+for i in range(len(arr)):
+    count[arr[i]] += 1
+
+for i in range(len(count)):
+    for j in range(count[i]):
+        print(i, end=' ')
+```
+
+
+
+#### 3.3.2. Radix Sort
 
 
 
@@ -187,8 +369,6 @@
 
 
 
-
-
 **해결 방법**
 
 - O(V^2)
@@ -261,8 +441,6 @@
 
 
 
-
-
 ### 5.2. Floyd-Warshall
 
 > 그래프의 모든 노드 간의 최단 거리를 구하는 알고리즘
@@ -323,4 +501,163 @@
 ## **6. 그래프 이론**
 
 
+
+### 6.1. Disjoint Sets
+
+> 공통 원소가 없는 두 집합
+
+
+
+두 트리가 서로소 집합인지 확인하려면 **UNION**연산을 통해 root가 다른지 확인해본다
+
+```python
+parent = [0] * V
+
+# 먼저 모든 노드에 대해 자기 자신을 부모로 갖도록 설정함
+for i in range(V):
+    parent[x] = x
+
+# 재귀적으로 자신의 root를 찾는 함수
+def find_parent(x):
+    if parent[x] != x:
+        # 부모 노드를 root로 갱신하여 root에 빠르게 접근할 수 있도록 함(경로 압축)
+        parent[x] = find_parent(parent[x])
+    return parent[x]
+
+# 노드 x와 노드 y의 root를 같도록 함: UNION
+# 여기선 번호가 더 작은 노드를 부모로 가게 합침
+def union(x, y):
+    x = find_parent(x)
+    y = find_parent(y)
+    if x < y:
+	    parent[y] = x
+    else:
+        parent[x] = y
+```
+
+root별로 구분하여 서로소 집합을 나눌 수 있음
+
+
+
+**사이클 판별하기**
+
+1. 각 간선을 확인하며 간선에 연결된 두 노드의 root를 확인
+   - root가 다르다면 union을 수행
+   - **root가 같다면 사이클이 존재하는 것**
+2. 모든 간선에 대해 1을 반복
+
+
+
+### 6.2. Spanning Tree
+
+> 하나의 그래프가 있을 때, **모든 노드를 포함하면서 사이클이 존재하지 않는** 부분 그래프
+
+![spanning tree](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Minimum_spanning_tree.svg/1200px-Minimum_spanning_tree.svg.png)
+
+- 스패닝(신장) 트리는 **DFS/BFS를 이용해 선형 시간에서 찾을 수 있음**
+- 병렬 및 분산 컴퓨팅에서 중요하다고 함
+  - 상세 내용은 차후에 추가
+- 최소한의 비용으로 이러한 신장 트리를 만들 수 있는 알고리즘을 **최소 신장 트리 알고리즘**이라 함
+  - Boruvka's algorithm	  O(*m* log *n*)
+  - Prim's algorithm            O(*m* log *n*) or O(*m* + *n* log *n*)
+  - Kruskal's algorithm       O(*m* log *n*)
+
+
+
+#### 6.2.1. Prim's Algorithm
+
+
+
+#### 6.2.2. Kruskal's Algorithm
+
+
+
+**문제 해결 기본 아이디어**
+
+1. 모든 간선에 대해 비용의 오름차순으로 정렬
+2. 간선을 비용순서대로 추가하는데, 사이클을 발생시킨다면 추가하지 않음
+   - 비용이 적은 순서대로 사이클 없이 추가하기 때문에 말 그대로 최소 비용 신장 트리가 됨
+
+
+
+**해결 방법**
+
+- 사이클을 발생시키는지 UNION을 이용하여 판별하면서 구현
+
+  - **집합 자료구조를 이용**해서 판별하면 훨씬 빠르게 동작함
+
+- ```python
+  cnt = 0
+  
+  for i in range(E):
+      px = find_root(edge[i][0])
+      py = find_root(edge[i][1])
+  
+      # cycle check
+      if px != py:
+          cnt += 1
+          union(px, py)
+      
+      # MST의 간선의 수는 노드의 개수 -1 이다
+      if cnt == V-1:
+          break
+  ```
+
+
+
+### 6.3. Topology Sort
+
+> 방향 그래프의 모든 노드를 방향성에 거스르지 않도록 순서대로 나열하는 것
+>
+> 선수과목을 고려한 학습 순서 설정을 예로 들 수 있음
+
+
+
+[백준 2252번](https://www.acmicpc.net/problem/2252)
+
+
+
+**문제 해결 기본 아이디어**
+
+1. **진입차수**가 0인 노드를 큐에 넣는다
+   - 진입차수: 특정한 노드로 **들어오는** 간선의 개수
+   - 진입차수가 0인 과목은 선수과목이 없는 1학년 과목이라 할 수 있음
+2. 큐가 빌 때까지 다음을 반복한다
+   - 큐에서 원소를 꺼내 해당 노드에서 출발하는 간선을 제거한다
+   - 새롭게 진입차수가 0이 된 노드를 큐에 넣는다
+   - 주의) 사이클이 존재한다면 **모든 노드를 방문하기 전에 큐가 빔**
+     - 사이클 내 노드들은 진입차수가 0이 되지 않기 때문
+
+
+
+**해결 방법**
+
+모든 노드와 간선들을 한 번씩 확인하므로 시간 복잡도는 O(V+E)
+
+```python
+# 진입차수: 해당 노드로 들어오는 간선의 갯수
+indegree = [0]*(v+1)
+graph = [[] for _ in range(v+1)]
+
+for _ in range(e):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    indegree[b] += 1
+
+q = deque()
+
+for i in range(1, v+1):
+    # 진입차수가 0인 노드를 큐에 넣는다
+    if indegree[i] == 0:
+        q.append(i)
+
+while q:
+    # 현재 방문중인 노드 now
+    now = q.popleft()
+    for node in graph[now]:
+        # now에서 출발하는 간선을 제거: 도착 노드들의 진입차수 -=1
+        indegree[node] -= 1
+        if indegree[node] == 0:
+            q.append(now)
+```
 
