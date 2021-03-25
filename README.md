@@ -27,6 +27,36 @@
 
 
 
+파이썬 문자열 처리 관련 함수
+
+- 대문자, 소문자
+  - `string.upper()` : 대문자로 변환
+  - `string.lower()` : 소문자로 변환
+- 문자열 바꾸기
+  - `string.replace(string1, string2)` : 문자열 내의 문자열1을 문자열2로 변환
+  - 일부 글자를 바꾸거나 삭제할 수 있고, 공백을 없애는 데 편리함
+  - 변환하면 string이 바뀌는 것이 아니라 **새로운 문자열을 리턴함**
+- 문자열 찾기
+  - `string.find(word)` : 찾는 문자열이 처음 나오는 위치 리턴, 없으면 -1 리턴
+  - `string.count(word)` : 해당 문자열의 갯수를 리턴
+- 문자열 슬라이싱
+  - `string[start:end]` : start에서 end-1번 인덱스에 해당하는 문자열을 추출
+  - `string[::2]` (2개씩 건너뛰며 추출), `string[::-1]` (뒤에서부터 출력)
+- 문자열 분리, 결합
+  - `string.split(word)` : word를 기준으로 분리
+  - `"word".join(string)` : string의 각 원소 사이에 word를 삽입 
+- 문자열 공백 제거
+  - `string.strip()` : 양쪽 공백 제거
+  - `string.lstrip()` : 왼쪽 공백 제거
+  - `string.rstrip()` : 오른쪽 공백 제거
+  - `string.strip(letter)` : 양쪽에서 letter가 나오지 않을 때까지 제거
+  - `string.lstrip(letter)` : 왼쪽에서 letter가 나오지 않을 때까지 제거
+  - `string.rstrip(letter)` : 오른쪽에서 letter가 나오지 않을 때까지 제거
+  - `string.strip(ab)` : 양쪽에서 a 또는 b가 나오지 않을 때까지 제거
+- 아스키 코드 관련
+  - `chr(num)` : 아스키 코드를 입력받아 문자를 출력
+  - `ord(letter)` : 문자를 입력받아 아스키 코드를 출력
+
 
 
 ## **1. 그리디 알고리즘**
