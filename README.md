@@ -420,7 +420,54 @@ for i in range(len(count)):
                dp[j][j+i-1] = 1
    ```
 
+
+
+### 4.4. Traveling Sales Person
+
+> 외판원 순회 문제
+
+
+
+[백준 2098번](https://www.acmicpc.net/problem/2098)
+
+
+
+**문제 해결 기본 아이디어**
+
+1. 먼저 "순회"이므로 어느 지점에서 출발해도 결과는 같음: 0번 도시에서 출발한다 가정
+2. 지금까지 방문한 도시의 목록으로 배열이 아니라 **비트마스킹**을 이용
+3. 지금까지 방문한 목록으로부터, **앞으로 모든 도시를 순회하는 데 필요한 비용 중 최솟값**을 취해 나가면서 계산을 진행(동적 계획법)
+
+
+
+**해결 방법**
+
+1. n번 도시를 방문하고 있을 때 지금까지 방문한 모든 경우에 대해 앞으로 필요한 최소한의 비용을 담을 배열 DP를 `dp = [[ING]*(1<<n) for _ in range(n)]`과 같이 만든다
+
+2. 나머지는 재귀적으로 구현하되 dp의 값이 None이 아니라면(이미 계산을 수행했다면) 리턴하여 중복 제거
+
+   ```python
+   # 현재 위치, 방문한 기록
+   def travel(start, visit):
+       # 모든 도시를 다 순회했다면
+       if visit == check:
+           # 마지막 도시에서 출발 도시로 돌아가는 길이 있다면 값을, 아니면 INF 리턴
+           return cost[start][0] or INF
    
+       # 이미 해당 출발점에 대해 계산이 이루어졌다면 바로 리턴: 중복 제거
+       if dp[start][visit] is not None:
+           return dp[start][visit]
+   
+       temp = INF
+       for i in range(n):
+           # i로 가는 길이 존재하고, 아직 방문하지 않았다면
+           if cost[start][i] and visit & (1<<i) == 0:
+               temp = min(temp, travel(i, visit|(1<<i))+cost[start][i])
+       # 현재 위치와 현재까지 방문한 목록에 대응되는 최솟값을 갱신
+       dp[start][visit] = temp
+   
+       return temp
+   ```
 
 
 
