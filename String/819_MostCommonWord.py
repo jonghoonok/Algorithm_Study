@@ -1,9 +1,9 @@
-from collections import defaultdict
+# from collections import defaultdict
 
 # 내 답안: 잘못됨
 # 마지막에 문자로 끝나는 경우 한 글자가 짤림
 def mostCommonWord(paragraph, banned) -> str:
-    words = defaultdict(int)
+    words = collentions.defaultdict(int)
     n = len(paragraph)
     i = 0
     while i < n:
@@ -39,7 +39,17 @@ def mostCommonWord(paragraph, banned) -> str:
 
 # Counter 객체를 이용한 풀이
 def mostCommonWord_2(self, paragraph: str, banned: List[str]) -> str:
-    counts = defaultdict(int)
+    words = [word for word in re.sub(r'[^\w]', ' ', paragraph).lower().split() if word not in banned]
+    
+    counts = collections.Counter(words)
+    return counts.most_common(1)[0][0]
+
+
+# defaultdict를 이용한 풀이
+def mostCommonWord_3(self, paragraph: str, banned: List[str]) -> str:
+    words = [word for word in re.sub(r'[^\w]', ' ', paragraph).lower().split() if word not in banned]
+    
+    counts = collections.defaultdict(int)
     for word in words:
         counts[word] += 1
 
