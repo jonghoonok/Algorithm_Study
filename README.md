@@ -70,6 +70,8 @@
   - `list[::-1]` 과 같은 기능을 하는데, 이 쪽이 빠르다고 함
 - `list.insert(index, x)` : list 리스트의 index에 x를 삽입함
 - `del list[index]` : list 리스트의 index번 째 원소를 삭제함
+- 리스트도 enumerate를 지원함
+  - `for i, n in enumerate(list)` 하면 앞은 인덱스, 뒤는 값이 됨 
 
 
 
