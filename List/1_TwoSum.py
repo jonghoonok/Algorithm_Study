@@ -45,10 +45,6 @@ def twoSum_5(nums, target):
         nums_map[num] = i
 
 
-# 투 포인터 이용
-def twoSum_5(nums, target):
-    pass
-
 nums = [3,2,4]
 target = 6
 print(twoSum(nums, target))
