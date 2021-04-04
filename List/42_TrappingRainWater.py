@@ -38,23 +38,46 @@ def trap_1(height) -> int:
 
 # 내 풀이랑 논리는 동일한데 조금 더 간결함
 def trap_1(height) -> int:
-    if not height:
-        return 0
+        if not height:
+            return 0
 
+        volume = 0
+        left, right = 0, len(height) - 1
+        left_max, right_max = height[left], height[right]
+        while left < right:
+            left_max, right_max = max(left_max, height[left]), max(right_max, height[right])
+
+            if left_max <= right_max:
+                volume += left_max - height[left]
+                left += 1
+            else:
+                volume += right_max - height[right]
+                right -= 1
+        return volume
+
+
+# 스택을 이용한 풀이
+def trap_2(height):
+    stack = []
     volume = 0
-    left, right = 0, len(height) - 1
-    left_max, right_max = height[left], height[right]
-    while left < right:
-        left_max, right_max = max(left_max, height[left]), max(right_max, height[right])
 
-        if left_max <= right_max:
-            volume += left_max - height[left]
-            left += 1
-        else:
-            volume += right_max - height[right]
-            right -= 1
+    for i in range(len(height)):
+        # 낮아지다가 높아지는 지점을 만나면 높이차만큼 물을 채운다
+        while stack and height[i] > height[stack[-1]]:
+            top = stack.pop()
+
+            # pop하자마자 스택이 비면 stop: 올라가는 구간에서는 마지막으로 제일 높은 벽만 남기게 됨
+            if not stack:
+                break
+
+            distance = i - stack[-1] -1
+            waters = min(height[i], height[stack[-1]]) - height[top]
+
+            volume += distance * waters
+
+        stack.append(i)
+    
     return volume
-
 
 height = [4,2,0,3,2,5]
 print(trap(height))
