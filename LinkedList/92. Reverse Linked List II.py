@@ -6,13 +6,19 @@ class ListNode:
 
 class Solution:
     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
-        node = head
-        cnt = 1
-        while cnt < left - 1:
+        if not head or m == n:
+            return head
+        
+        root = node = ListNode(None)
+        node.next = head
+        for _ in range(left - 1):
             node = node.next
-            cnt += 1
-        prev = node
-        node = prev.next
-        cnt += 1
-        while cnt < right - 1:
-            
+        
+        # 뒤집었을 때 가장 마지막이 되는 노드
+        end = node.next
+
+        for _ in range(right - left):
+            temp, node.next, end.next = node.next, end.next, end.next.next
+            node.next.next = temp        
+        
+        return head
