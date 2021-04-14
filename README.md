@@ -117,9 +117,35 @@
 파이썬 기본 함수
 
 - `max()`
+
   - key에 들어가는 함수를 활용하여 해당 함수를 처리한 결과 중 최댓값을 구할 수 있음
   - 예) `max([1, 0, -2, 3, -5], key=abs)` : 절댓값 기준으로 찾기 때문에 -5가 나옴
   - 예2) `max(counts, key=counts.get)` : 딕셔너리 counts 중 value가 가장 큰 것의 키를 구할 수 있음
+
+- `zip()`
+
+  - 2개 이상의 시퀀스를 짧은 길이를 기준으로 1대1 대응하는 튜플 시퀀스를 만들어줌
+
+  - 예시
+
+    - ```python
+      a = [1, 2, 3, 4, 5]
+      b = [2, 3, 4, 5]
+      c = [3, 4, 5]
+      
+      # [(1, 2), (2, 3), (3, 4), (4, 5)]
+      list(zip(a, b))
+      
+      # [(1, 2, 3), (2, 3, 4), (3, 4, 5)]
+      list(zip(a, b, c))
+      ```
+
+- Asterisk
+
+  - Unpack을 해 주는 연산자
+  - 예시
+    - `print(*fruits)` 를 하여 리스트 fruits에 있는 원소들을 구분하여 한 번에 출력
+    - `list(zip(*collections.Counter(nums).most_common(k)))` : 튜플이 담긴 리스트를 반환하는 most_common 함수의 결과값을 zip으로 묶으면 튜플 내부의 값끼리 묶는 것이 아니라 튜플이 통으로 나오기 때문에 원하는 결과를 얻을 수 없어 unpack을 해준 후에 묶음 
 
 
 
@@ -149,9 +175,79 @@
 
 ### 2.2. DFS
 
+> 깊이 우선 탐색
+>
+> 백트래킹을 통해 뛰어난 효용을 보임
+
+
+
+재귀로 구현한 DFS
+
+```python
+def recursive_dfs(v, visited):
+    visited.append(v)
+    for w in graph[v]:
+        if w not in visited:
+            recursive_dfs(w, visited)
+    return visited
+```
+
+
+
+
+
+반복으로 구현한 DFS
+
+```python
+def iterative_dfs(v):
+    visited = []
+    stack = [v]
+    while stack:
+        t = stack.pop()
+        if t not in visited:
+            visited.append(t)
+            for w in graph[t]:
+                stack.append(w)
+    return visited
+```
+
+
+
+#### Backtracking
+
+> 해결책에 대한 후보를 쌓아가다 가능성이 없다고 판단되는 즉시 후보를 포기(backtrack)
+>
+> 트리를 탐색하다가 불필요한 부분을 버리는 것을 가지치기(pruning)라 함
+
+
+
 
 
 ### 2.3. BFS
+
+> 너비 우선 탐색: 출발점으로부터 가까운 순서대로 탐색
+>
+> 최단 경로를 구하는 문제에 주로 사용됨
+
+
+
+큐를 이용하여 구현
+
+```python
+def iterative_bfs(v):
+    visited = [v]
+    queue = [v]
+    while queue:
+        # 파이썬으로 큐는 잘 사용하지 않으니 덱을 사용한다. 여기서는 큐 이용
+        t = queue.pop(0)
+        for w in graph[t]:
+            if w not in visited:
+	            visited.append(w)
+    	        queue.append(w)
+    return visited
+```
+
+
 
 
 

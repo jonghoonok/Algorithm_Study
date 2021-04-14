@@ -28,3 +28,19 @@ def numJewelsInStones_2(self, jewels: str, stones: str) -> int:
         cnt += freqs[char]
 
     return cnt
+
+
+# Counter를 이용 
+def numJewelsInStones_3(self, jewels: str, stones: str) -> int:
+        freqs = collections.Counter(stones)
+        cnt = 0
+
+        for char in jewels:
+            cnt += freqs[char]
+
+        return cnt
+
+
+# Pythonic
+def numJewelsInStones_3(self, jewels: str, stones: str) -> int:
+        return sum(s in jewels for s in stones)
