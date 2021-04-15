@@ -17,7 +17,7 @@ def combine_1(n: int, k: int):
     return result
 
 
-# 책의 풀이
+# 책의 풀이: 1번 풀이보다 슬라이스가 한 번 덜 들어가서인지 빠름
 def combine_2(n: int, k: int):
     def dfs(elements, start, k):
         if k == 0:
