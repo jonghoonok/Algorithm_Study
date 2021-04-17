@@ -8,7 +8,7 @@ input = sys.stdin.readline
 def dijkstra(start):
     # 각 노드의 최단거리를 "업데이트"하는 데 사용하는 우선순위큐
     q = []
-    heapq.heappush(q, (0, start))
+    heapq.heappush(q, (start, 0))
     # 출발점으로부터의 각 노드의 최단거리를 저장하는 배열: 최종 결과
     distance[start] = 0
     while q:
@@ -23,7 +23,7 @@ def dijkstra(start):
             cost = dist + edge[1]
             if cost < distance[edge[0]]:
                 distance[edge[0]] = cost
-                heapq.heappush(q, (cost, i[0]))
+                heapq.heappush(q, (cost, edge[0]))
 
 
 INF = int(1e9)
