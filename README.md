@@ -275,9 +275,22 @@ def iterative_bfs(v):
 
 
 
-#### 3.1.1. Selection Sort
+#### 3.1.1. Bubble Sort
+
+문제 해결 기본 아이디어랄 것도 없다. 하나씩 비교해서 크면 뒤로 넘긴다.
+
+해결 방법
+
+```python
+for i in range(n):
+    for j in range(n-1):
+        if arr[j] > arr[j+1]:
+            arr[j], arr[j+1] = arr[j+1], arr[j]
+```
 
 
+
+#### 3.1.2. Selection Sort
 
 문제 해결 기본 아이디어
 
@@ -301,7 +314,7 @@ for i in range(len(arr)-1):
 
 
 
-#### 3.1.2. Insertion Sort
+#### 3.1.3. Insertion Sort
 
 > 이미 정렬된 배열에 대해서는 O(N)에 끝나는 정렬
 
@@ -387,11 +400,56 @@ def quick_sort(arr, start, end):
 
 
 
-
-
 #### 3.2.2. Merge Sort
 
-> 
+> Stable sort로 최선과 최악 모두 O(nlogn)의 성능을 보임
+>
+> 분할 정복의 진수를 보여주는 알고리즘
+
+
+
+문제 해결 기본 아이디어
+
+1. 배열을 가장 작은 단위(1개씩)까지 쪼갠다
+2. 작은 배열은 정렬한 후 2개씩 병합하면서 다시 정렬된 배열을 구성한다
+3. 원래 배열의 크기가 될 때까지 반복하여 원래 배열을 정렬된 상태로 만든다
+
+
+
+해결 방법
+
+```python
+def merge_sort(list):
+    if len(list) <= 1:
+        return list
+    
+    mid = len(list) // 2
+    leftList = list[:mid]
+    rightList = list[mid:]
+    
+    # 왼쪽과 오른쪽을 각각 정렬한 후 병합
+    leftList = merge_sort(leftList)
+    rightList = merge_sort(rightList)
+    return merge(leftList, rightList)
+
+def merge(left, right):
+    result = []
+    while len(left) > 0 or len(right) > 0:
+        if len(left) > 0 and len(right) > 0:
+            if left[0] <= right[0]:
+                result.append(left[0])
+                left = left[1:]
+            else:
+                result.append(right[0])
+                right = right[1:]
+        elif len(left) > 0:
+            result.append(left[0])
+            left = left[1:]
+        elif len(right) > 0:
+            result.append(right[0])
+            right = right[1:]
+    return result
+```
 
 
 
@@ -407,17 +465,15 @@ def quick_sort(arr, start, end):
 
 
 
-문제 해결 기본 아이디어
+[문제 해결 기본 아이디어]
 
-- 데이터의 **모든 범위를 담을 수 있는 배열**을 만들고 거기에 데이터를 **한 번 씩만 채움**
+데이터의 **모든 범위를 담을 수 있는 배열**을 만들고 거기에 데이터를 **한 번 씩만 채움**
 
-1. 배열을 선언
-2. 데이터를 순회하면서 해당 숫자와 같은 인덱스의 배열의 값을 1씩 추가한다
-3. 끝
+배열을 선언 → 데이터를 순회하면서 해당 숫자와 같은 인덱스의 배열의 값을 1씩 추가한다 → 끝
 
 
 
-해결 방법
+[해결 방법]
 
 ```python
 # 데이터의 최대 범위만큼의 길이를 갖는 배열 선언
