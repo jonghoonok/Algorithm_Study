@@ -259,7 +259,49 @@ def iterative_bfs(v):
 
 
 
+재귀를 이용하여 구현
 
+```python
+def binary_search(arr, target):
+    def search(left, right):
+        if left > right:
+            return -1
+        
+        mid = (left+right)//2
+        if target < arr[mid]:
+            return search(left. mid-1)
+        elif target > arr[mid]:
+            return search(mid+1, right)
+        else:
+            return mid
+    
+    return search(0, len(arr)-1)
+```
+
+
+
+반복을 이용하여 구현
+
+```python
+def binary_search(arr, target):
+    n = len(arr)
+    l, r = 0, n-1
+    while l <= r:
+        mid = (l + r) // 2
+        if target < arr[mid]:
+            r = mid-1
+        elif target > arr[mid]:
+            l = mid+1
+        else:
+            return mid
+    return -1
+```
+
+
+
+
+
+파이썬에서는 그냥 모듈을 쓰자
 
 
 
